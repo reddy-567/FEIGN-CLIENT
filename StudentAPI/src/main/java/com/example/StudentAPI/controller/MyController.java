@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,6 +20,7 @@ import com.example.StudentAPI.Student;
 import com.example.StudentAPI.dao.StudentRepo;
 
 @RestController
+@RefreshScope
 public class MyController {
 	
 	@Autowired
@@ -92,7 +94,7 @@ public class MyController {
 		return plans;
 	}*/
 
-	@Value("${message}")
+	@Value("${welcome.msg}")
 	private String msg;
 	@GetMapping("/getMsg")
 	public String getmsg()
