@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.springcloud.feign.client.CollegeClient;
 import com.example.springcloud.feign.client.ConfigServerClient;
 import com.example.springcloud.feign.client.StudentClient;
+import com.example.springcloud.feign.dto.College;
 import com.example.springcloud.feign.dto.Student;
 
 @RestController
@@ -23,6 +25,9 @@ public class FeignController {
 	
 	@Autowired
 	private ConfigServerClient configserverclient;
+	
+	@Autowired
+	private CollegeClient collegeclient;
 	
 	@GetMapping("/feign-students")
 	public List<Student> getStudents()
@@ -59,5 +64,37 @@ public class FeignController {
 	{
 		return configserverclient.demo();
 	}
+	
+	@PostMapping("/feign-addCollege")
+	public College addCollege(@RequestBody College college)
+	{
+		return collegeclient.addCollege(college);
+	}
+
+	@GetMapping("/feign-getCollege/{id}")
+	public College get(@PathVariable("id") int id)
+	{
+		return collegeclient.getCollege(id);
+	}
+	@GetMapping("/feign-getColleges")
+	public List<College> getAll()
+	{
+		return collegeclient.getColleges();
+	}
+	
+	@PutMapping("/feign-updateColleges/{id}")
+	public College update(@PathVariable("id") int id,@RequestBody College clg)
+	{
+		return collegeclient.update(id, clg);
+	}
+	
+	@DeleteMapping("/feign-deleteCollege/{id}")
+	public String delete(@PathVariable("id") int id)
+	{
+		return collegeclient.delte(id);
+	}
+	
 }
+
+
 
